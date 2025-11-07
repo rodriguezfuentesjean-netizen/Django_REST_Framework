@@ -23,7 +23,7 @@ python -m venv .venv
 
 En PowerShell usa: `.\.venv\Scripts\Activate.ps1`.
 
-## 3. Instalar dependencias
+## 2. Instalar dependencias
 
 Instala Django y Django REST Framework:
 
@@ -31,7 +31,7 @@ Instala Django y Django REST Framework:
 pip install Django djangorestframework djangorestframework-authtoken
 ```
 
-## 4. Configuración mínima en `weather_api/settings.py`
+## 3. Configuración mínima en `weather_api/settings.py`
 
 Asegúrate de tener en `INSTALLED_APPS`:
 
@@ -57,7 +57,7 @@ REST_FRAMEWORK = {
 }
 ```
 
-## 5. Migraciones y crear la base de datos
+## 4. Migraciones y crear la base de datos
 
 Ejecuta:
 
@@ -66,9 +66,9 @@ python manage.py makemigrations
 python manage.py migrate
 ```
 
-## 6. Crear usuario (jean) y token
+## 5. Crear usuario (jean) y token
 
-### 6.1 Crear usuario
+### 5.1 Crear usuario
 
 **Opción interactiva (superuser)**:
 
@@ -84,7 +84,7 @@ Sigue el prompt para definir la contraseña.
 python manage.py shell -c "from django.contrib.auth import get_user_model; User=get_user_model(); User.objects.create_user('jean','jean@gmail.com','1234')"
 ```
 
-### 6.2 Crear token para el usuario
+### 5.2 Crear token para el usuario
 
 **Opción 1 — comando (si está disponible):**
 
@@ -106,7 +106,7 @@ La salida será la cadena del token, por ejemplo:
 
 Guarda ese valor para usarlo en las peticiones autenticadas.
 
-## 7. Ejecutar el servidor de desarrollo
+## 6. Ejecutar el servidor de desarrollo
 
 En la carpeta del proyecto (donde está `manage.py`):
 
@@ -120,7 +120,7 @@ Verás un mensaje similar a:
 Starting development server at http://127.0.0.1:8000/
 ```
 
-## 8. Endpoints disponibles
+## 7. Endpoints disponibles
 
 Suponiendo que registraste el router como `/api/` en `temperatures/urls.py`:
 
@@ -131,9 +131,9 @@ Suponiendo que registraste el router como `/api/` en `temperatures/urls.py`:
 * `PATCH /api/temperatures/{id}/` — actualización parcial (requiere autenticación)
 * `DELETE /api/temperatures/{id}/` — eliminar (requiere autenticación)
 
-## 9. Comandos `curl` — ejemplos listos y salida esperada
+## 8. Comandos `curl` — ejemplos listos y salida esperada
 
-### 9.1 GET — Listar (público)
+### 8.1 GET — Listar (público)
 
 Comando:
 
@@ -163,7 +163,7 @@ Si ya hay datos, la respuesta será un arreglo de objetos JSON:
 ]
 ```
 
-### 9.2 POST — Intento sin token (debe fallar)
+### 8.2 POST — Intento sin token (debe fallar)
 
 Comando (sin auth header):
 
@@ -184,7 +184,7 @@ Content-Type: application/json
 
 > Si recibes `403 Forbidden`, revisa la configuración de permisos; por defecto `IsAuthenticatedOrReadOnly` devuelve 401 cuando no hay credenciales.
 
-### 9.3 POST — Con token (éxito)
+### 8.3 POST — Con token (éxito)
 
 Comando:
 
@@ -209,7 +209,7 @@ Content-Type: application/json
 }
 ```
 
-### 9.4 GET detalle
+### 8.4 GET detalle
 
 Comando:
 
@@ -231,7 +231,7 @@ Content-Type: application/json
 }
 ```
 
-### 9.5 PUT — Actualizar (con token)
+### 8.5 PUT — Actualizar (con token)
 
 Comando:
 
@@ -256,7 +256,7 @@ Content-Type: application/json
 }
 ```
 
-### 9.6 DELETE — Eliminar (con token)
+### 8.6 DELETE — Eliminar (con token)
 
 Comando:
 
@@ -272,4 +272,3 @@ HTTP/1.1 204 No Content
 ```
 
 (El recurso fue eliminado.)
-Si quieres, puedo también generar un archivo `requirements.txt` con las dependencias necesarias (basado en lo instalado por mí aquí) o exportar un `curl_examples.sh` con todos los comandos listos. ¿Quieres que cree alguno de esos archivos en el canvas?
